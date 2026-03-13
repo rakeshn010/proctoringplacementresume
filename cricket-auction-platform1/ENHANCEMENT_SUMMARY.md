@@ -139,11 +139,11 @@ python -m ai.train_model
 
 ### 5️⃣ Audit Logging System ✅
 
-**Location:** `logging/`
+**Location:** `audit_logging/`
 
 **Files Created:**
-- `logging/audit_logger.py` - Audit logging service
-- `logging/__init__.py` - Module initialization
+- `audit_logging/audit_logger.py` - Audit logging service
+- `audit_logging/__init__.py` - Module initialization
 
 **Features:**
 - Comprehensive event tracking
@@ -252,13 +252,13 @@ audit_logs {
 2. **`services/auction_service.py`** - Added notifications and audit logging
    ```python
    from notifications.notification_service import notification_service
-   from logging.audit_logger import audit_logger
+   from audit_logging.audit_logger import audit_logger
    ```
 
 3. **`services/bid_service.py`** - Added notifications and audit logging
    ```python
    from notifications.notification_service import notification_service
-   from logging.audit_logger import audit_logger
+   from audit_logging.audit_logger import audit_logger
    ```
 
 ---

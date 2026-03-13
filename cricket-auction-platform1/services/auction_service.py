@@ -12,7 +12,7 @@ from database import db
 from core.config import settings
 from websocket.manager import manager
 from notifications.notification_service import notification_service
-from logging.audit_logger import audit_logger
+from audit_logging.audit_logger import audit_logger
 
 
 class AuctionService:

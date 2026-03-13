@@ -243,7 +243,7 @@ All these events are automatically logged:
 ### Retrieve Logs (Admin)
 
 ```python
-from logging.audit_logger import audit_logger
+from audit_logging.audit_logger import audit_logger
 
 # Get recent logs
 logs = audit_logger.get_audit_logs(limit=100)
