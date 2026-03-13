@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Auction Studio - SKIT Premier League</title>
+    <link rel="icon" type="image/jpeg" href="/static/skit-logo.jpg" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/skit-pro.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Override with cinematic enhancements */
+        :root {
+            --accent-cyan: #00d4ff;
+            --accent-red: #ff3366;
+        }
+
+        /* Animated Particle Background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        /* Control Bar */
+        .control-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .control-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .studio-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-cyan));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-red);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 900;
+            animation: livePulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+        }
+
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 85, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 85, 0.9); }
+        }
+
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .control-btns {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        .ctrl-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+        }
+
+        /* Main Container */
+        .studio-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Auction Stage */
+        .auction-stage {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            padding: 4rem;
+            margin-bottom: 2rem;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auction-stage::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+            animation: rotateGlow 30s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .player-spotlight {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .player-img-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 2rem;
+            perspective: 1000px;
+        }
+
+        .player-img-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.15); }
+        }
+
+        .player-img {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--accent-gold);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .player-img:hover {
+            transform: scale(1.05) rotateY(5deg);
+        }
+
+        .player-name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .player-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .badge-custom {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .badge-role {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .badge-category {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .bid-display {
+            margin: 2.5rem 0;
+        }
+
+        .bid-label {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .bid-amount {
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+            animation: bidPop 0.6s ease-out;
+        }
+
+        @keyframes bidPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+
+        .leading-team {
+            font-size: 1.8rem;
+            color: var(--accent-cyan);
+            margin-top: 1.5rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            margin-top: 2.5rem;
+        }
+
+        .countdown-circle {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+        }
+
+        .countdown-text {
+            font-size: 3rem;
+            font-weight: 900;
+            fill: var(--accent-red);
+        }
+
+        /* SOLD/UNSOLD Banners */
+        .result-banner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+        }
+
+        .sold-banner {
+            font-size: 7rem;
+            font-weight: 900;
+            color: var(--accent-green);
+            text-shadow: 0 0 60px rgba(0, 255, 102, 1);
+            animation: soldPop 1s ease-out;
+        }
+
+        @keyframes soldPop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-15deg); }
+            50% { transform: translate(-50%, -50%) scale(1.3) rotate(5deg); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        }
+
+        .unsold-banner {
+            font-size: 7rem;
+            font-weight: 900;
+            color: var(--accent-red);
+            text-shadow: 0 0 60px rgba(255, 0, 85, 1);
+            animation: unsoldShake 1s ease-out;
+        }
+
+        @keyframes unsoldShake {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-50%, -50%) rotate(-8deg); }
+            75% { transform: translate(-50%, -50%) rotate(8deg); }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            margin: 1rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* AI Commentary Panel */
+        .commentary-panel {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            min-height: 120px;
+        }
+
+        .commentary-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--accent-cyan);
+            line-height: 1.6;
+            animation: typing 2s steps(40);
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Team Cards */
+        .team-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--accent-gold);
+            transform: translateX(8px) scale(1.02);
+        }
+
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .team-spent {
+            color: var(--accent-green);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        .budget-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 0.8rem;
+        }
+
+        .budget-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-gold));
+            transition: width 1.5s ease;
+        }
+
+        /* Event Feed */
+        .event-feed {
+            max-height: 700px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .event-feed::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .event-feed::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .event-feed::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 4px;
+        }
+
+        .event-item {
+            background: var(--glass-bg);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .event-item.bid { border-left-color: var(--accent-gold); }
+        .event-item.sold { border-left-color: var(--accent-green); background: rgba(0, 255, 136, 0.05); }
+        .event-item.unsold { border-left-color: var(--accent-red); background: rgba(255, 51, 102, 0.05); }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .event-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .event-time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .event-amount {
+            color: var(--accent-gold);
+            font-weight: 900;
+            font-size: 1.3rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Player Grid */
+        .player-filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-input {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .player-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .player-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .player-card-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--accent-gold);
+        }
+
+        .player-card-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .player-card-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.8rem;
+        }
+
+        .status-sold { background: var(--accent-green); color: #000; }
+        .status-unsold { background: var(--accent-red); color: white; }
+        .status-available { background: var(--accent-cyan); color: #000; }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            margin-top: 1.5rem;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            z-index: 9999;
+        }
+
+        .toast-notification {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 1rem;
+            min-width: 320px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(120px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .waiting-state {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .waiting-icon {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            opacity: 0.5;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .player-filters {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .auction-stage {
+                padding: 2rem 1rem;
+            }
+            .player-name {
+                font-size: 2rem;
+            }
+            .bid-amount {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <canvas id="particles"></canvas>
+
+    <!-- Control Bar -->
+    <div class="control-bar">
+        <div class="control-content">
+            <div class="studio-logo">🏏 SKIT PREMIER LEAGUE</div>
+            <div class="live-badge" id="liveIndicator">
+                <div class="live-dot"></div>
+                <span>LOADING</span>
+            </div>
+            <div class="control-btns">
+                <button class="ctrl-btn" id="soundToggle" title="Toggle Sound">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="ctrl-btn" id="commentaryToggle" title="Toggle AI Commentary">
+                    <i class="fas fa-microphone"></i> AI
+                </button>
+                <button class="ctrl-btn" id="fullscreenToggle" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="ctrl-btn" id="exportBtn" title="Export CSV">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main Studio Container -->
+    <div class="studio-container">
+        <!-- Statistics Wall -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Total Players</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="statSold">0</div>
+                <div class="stat-label">Sold</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value" id="statUnsold">0</div>
+                <div class="stat-label">Unsold</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="statRevenue">₹0</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+        </div>
+
+        <!-- Hero Auction Stage -->
+        <div class="auction-stage" id="auctionStage">
+            <div class="waiting-state">
+                <div class="waiting-icon">⏳</div>
+                <h2 style="color: var(--text-secondary);">Waiting for Auction to Start</h2>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">The cinematic auction will appear here</p>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left: Event Feed + Commentary -->
+            <div>
+                <!-- AI Commentary -->
+                <div class="glass-card" id="commentaryCard" style="display:none;">
+                    <div class="section-title">🎙️ AI Commentary</div>
+                    <div class="commentary-panel">
+                        <div class="commentary-text" id="commentaryText">
+                            Welcome to the live auction studio...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Feed -->
+                <div class="glass-card">
+                    <div class="section-title">📢 Live Events</div>
+                    <div class="event-feed" id="eventFeed">
+                        <p style="color: var(--text-secondary); text-align: center;">Waiting for events...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center: Analytics -->
+            <div class="glass-card">
+                <div class="section-title">📈 Analytics Engine</div>
+                <div class="chart-container">
+                    <canvas id="analyticsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Right: Team War Room -->
+            <div class="glass-card">
+                <div class="section-title">🏆 Team War Room</div>
+                <div id="teamWarRoom">
+                    <p style="color: var(--text-secondary); text-align: center;">Loading teams...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Intelligence Grid -->
+        <div class="glass-card">
+            <div class="section-title">👥 Player Intelligence</div>
+            <div class="player-filters">
+                <input type="text" class="filter-input" id="playerSearch" placeholder="🔍 Search players...">
+                <select class="filter-input" id="roleFilter">
+                    <option value="">All Roles</option>
+                    <option value="Batsman">Batsman</option>
+                    <option value="Bowler">Bowler</option>
+                    <option value="All-Rounder">All-Rounder</option>
+                    <option value="Wicketkeeper">Wicketkeeper</option>
+                </select>
+                <select class="filter-input" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="sold">Sold</option>
+                    <option value="unsold">Unsold</option>
+                </select>
+            </div>
+            <div class="player-grid" id="playerGrid">
+                <p style="color: var(--text-secondary); text-align: center; grid-column: 1/-1;">Loading players...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/live_studio.js?v=2.2.0"></script>
+</body>
+</html>

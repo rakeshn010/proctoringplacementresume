@@ -1,0 +1,560 @@
+/* ============================================================
+   MOBILE-OPTIMIZED BIDDING INTERFACE
+   Version: 1.0.0
+   Optimized for touch devices and small screens
+============================================================ */
+
+/* Mobile-First Responsive Breakpoints */
+@media (max-width: 768px) {
+    
+    /* ========== TEAM DASHBOARD MOBILE ========== */
+    
+    /* Larger touch-friendly buttons */
+    .bid-button {
+        min-height: 56px !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        padding: 16px 24px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .bid-button:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Bid input field - larger for mobile */
+    .bid-input {
+        min-height: 56px !important;
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        border-radius: 12px !important;
+        border: 2px solid #667eea !important;
+        padding: 12px !important;
+    }
+    
+    /* Quick bid presets */
+    .quick-bid-presets {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .quick-bid-btn {
+        flex: 1;
+        min-width: 70px;
+        min-height: 48px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+    
+    .quick-bid-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
+    }
+    
+    /* Player showcase - mobile optimized */
+    .player-showcase {
+        flex-direction: column !important;
+        padding: 16px !important;
+    }
+    
+    .player-image-container {
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 0 auto 20px !important;
+    }
+    
+    .player-image {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 4/3 !important;
+        object-fit: cover !important;
+        border-radius: 16px !important;
+    }
+    
+    .player-details {
+        width: 100% !important;
+        text-align: center !important;
+    }
+    
+    .player-name {
+        font-size: 28px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    /* Bid info cards - stack vertically on mobile */
+    .bid-info {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .bid-info-item {
+        width: 100% !important;
+        padding: 16px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+    }
+    
+    .bid-info-label {
+        font-size: 14px !important;
+    }
+    
+    .bid-info-value {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Bid controls - full width on mobile */
+    .bid-controls {
+        padding: 20px 16px !important;
+        gap: 16px !important;
+    }
+    
+    .bid-input-group {
+        width: 100% !important;
+    }
+    
+    /* Team overview - mobile layout */
+    .team-overview {
+        padding: 16px !important;
+    }
+    
+    .team-logo {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    /* Statistics cards - stack on mobile */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    
+    .stat-card {
+        padding: 16px !important;
+    }
+    
+    /* Player cards - 1 column on mobile */
+    #my-players-grid,
+    #all-players-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    
+    .player-card {
+        max-width: 100% !important;
+    }
+    
+    /* Navigation tabs - scrollable on mobile */
+    .custom-tabs {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+    
+    .custom-tabs::-webkit-scrollbar {
+        display: none !important;
+    }
+    
+    .custom-tab {
+        min-width: 120px !important;
+        font-size: 14px !important;
+        padding: 12px 16px !important;
+    }
+    
+    /* Auction timer - prominent on mobile */
+    #team-auction-timer-card {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 100 !important;
+        margin: 0 -16px 16px !important;
+        border-radius: 0 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    #team-auction-timer-display {
+        font-size: 48px !important;
+        font-weight: 800 !important;
+    }
+    
+    /* Toast notifications - mobile position */
+    #toast-container {
+        bottom: 80px !important;
+        right: 16px !important;
+        left: 16px !important;
+        width: auto !important;
+    }
+    
+    .toast-custom {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    /* Filters - mobile friendly */
+    .filters-section {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .filters-section input,
+    .filters-section select {
+        width: 100% !important;
+        min-height: 48px !important;
+        font-size: 16px !important;
+    }
+    
+    /* Charts - responsive */
+    canvas {
+        max-height: 250px !important;
+    }
+    
+    /* ========== ADMIN DASHBOARD MOBILE ========== */
+    
+    /* Admin controls - stack on mobile */
+    .admin-controls {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .admin-controls button {
+        width: 100% !important;
+        min-height: 48px !important;
+        font-size: 16px !important;
+    }
+    
+    /* Player cards admin - 1 column */
+    .admin-all-players-list,
+    .admin-batsman-players-list,
+    .admin-bowler-players-list,
+    .admin-allrounder-players-list,
+    .admin-wicketkeeper-players-list {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Live monitor - mobile layout */
+    .live-monitor-cards {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* ========== NOTIFICATION SETTINGS MODAL ========== */
+    
+    .notification-settings-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 20px;
+    }
+    
+    .notification-settings-content {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 20px;
+        padding: 24px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .notification-settings-content h3 {
+        color: #fff;
+        margin-bottom: 8px;
+        font-size: 24px;
+    }
+    
+    .notification-option {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 16px;
+        margin: 12px 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .notification-option label {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        cursor: pointer;
+        color: #fff;
+        width: 100%;
+    }
+    
+    .notification-option input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+        margin-top: 2px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    
+    .notification-option label > div {
+        flex: 1;
+    }
+    
+    .notification-settings-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+    }
+    
+    .notification-settings-actions button {
+        flex: 1;
+        min-height: 48px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    /* ========== HAPTIC FEEDBACK ANIMATION ========== */
+    
+    @keyframes haptic-pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.95); }
+        100% { transform: scale(1); }
+    }
+    
+    .haptic-feedback {
+        animation: haptic-pulse 0.2s ease;
+    }
+    
+    /* ========== SWIPE GESTURES INDICATOR ========== */
+    
+    .swipe-indicator {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        z-index: 1000;
+        animation: fadeInOut 2s ease;
+    }
+    
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+}
+
+/* ========== TABLET OPTIMIZATIONS (768px - 1024px) ========== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    #my-players-grid,
+    #all-players-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .admin-all-players-list,
+    .admin-batsman-players-list,
+    .admin-bowler-players-list,
+    .admin-allrounder-players-list,
+    .admin-wicketkeeper-players-list {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .bid-button {
+        min-height: 52px !important;
+        font-size: 17px !important;
+    }
+    
+    .bid-input {
+        min-height: 52px !important;
+        font-size: 18px !important;
+    }
+}
+
+/* ========== LANDSCAPE MODE OPTIMIZATIONS ========== */
+@media (max-width: 768px) and (orientation: landscape) {
+    
+    .player-showcase {
+        flex-direction: row !important;
+    }
+    
+    .player-image-container {
+        width: 40% !important;
+        margin: 0 20px 0 0 !important;
+    }
+    
+    .player-details {
+        width: 60% !important;
+        text-align: left !important;
+    }
+    
+    .bid-info {
+        flex-direction: row !important;
+    }
+    
+    .bid-info-item {
+        width: auto !important;
+        flex: 1 !important;
+    }
+}
+
+/* ========== ACCESSIBILITY IMPROVEMENTS ========== */
+
+/* Larger tap targets for better accessibility */
+button, a, input, select {
+    min-height: 44px;
+}
+
+/* Better focus indicators */
+button:focus,
+input:focus,
+select:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .bid-button {
+        border: 2px solid currentColor !important;
+    }
+    
+    .player-card {
+        border: 2px solid currentColor !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* Enhanced Mobile Optimizations - Added 2026-03-13 */
+
+/* Better touch targets */
+@media (max-width: 768px) {
+    button, a, .btn {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 20px;
+    }
+    
+    /* Improved spacing */
+    .container {
+        padding: 12px;
+    }
+    
+    /* Better readability */
+    body {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 18px; }
+    
+    /* Optimized cards */
+    .player-card, .team-card {
+        margin-bottom: 16px;
+    }
+    
+    /* Full-width buttons on mobile */
+    .btn-block-mobile {
+        width: 100%;
+        display: block;
+    }
+    
+    /* Better form inputs */
+    input, select, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+    }
+    
+    /* Sticky header on mobile */
+    .mobile-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    /* Bottom navigation */
+    .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-around;
+        padding: 8px 0;
+        z-index: 1000;
+    }
+    
+    .mobile-nav-item {
+        flex: 1;
+        text-align: center;
+        padding: 8px;
+        color: #666;
+        text-decoration: none;
+    }
+    
+    .mobile-nav-item.active {
+        color: #4CAF50;
+    }
+    
+    /* Swipe gestures hint */
+    .swipeable {
+        touch-action: pan-y;
+    }
+}
+
+/* Landscape mode optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+    .mobile-header {
+        padding: 8px 12px;
+    }
+    
+    .container {
+        padding: 8px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    body {
+        font-size: 14px;
+    }
+    
+    h1 { font-size: 20px; }
+    h2 { font-size: 18px; }
+    h3 { font-size: 16px; }
+}

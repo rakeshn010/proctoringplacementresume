@@ -1,0 +1,49 @@
+# Core Framework
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+gunicorn>=21.2.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+email-validator>=2.0.0
+
+# Database
+pymongo>=4.5.0
+
+# Authentication & Security
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+bcrypt>=4.0.0
+
+# Environment & Config
+python-dotenv>=1.0.0
+
+# Templates & Static Files
+jinja2>=3.1.0
+python-multipart>=0.0.6
+
+# WebSocket Support
+websockets>=12.0
+
+# Redis (Optional - for caching)
+redis>=5.0.0
+
+# Excel Export (Optional)
+openpyxl>=3.1.0
+
+# Logging
+python-json-logger>=2.0.0
+
+# System monitoring
+psutil>=5.9.0
+
+# HTTP Client
+httpx>=0.24.0
+
+# Rate Limiting
+slowapi>=0.1.9
+
+# CORS
+starlette>=0.27.0
+
+# Image Upload & Storage
+cloudinary>=1.44.0

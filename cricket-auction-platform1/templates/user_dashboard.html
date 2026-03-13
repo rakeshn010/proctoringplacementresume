@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Dashboard - SKIT Premier League</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/static/skit-pro.css" />
+  
+  <style>
+    body {
+      background: #000000 !important;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .dashboard-container {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .college-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid #ffd700;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+      margin-bottom: 1.5rem;
+      object-fit: cover;
+    }
+
+    .welcome-text {
+      font-size: 2.5rem;
+      color: #ffffff !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle-text {
+      font-size: 1.2rem;
+      color: #cbd5e1;
+    }
+
+    .options-card {
+      background: rgba(17, 17, 17, 0.8);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-header-custom {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .option-btn {
+      width: 100%;
+      padding: 1.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .btn-watch {
+      background: linear-gradient(135deg, #00d4ff, #0099cc);
+      color: #000000;
+      border-color: #00d4ff;
+    }
+
+    .btn-watch:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+      border-color: #ffd700;
+    }
+
+    .btn-register {
+      background: linear-gradient(135deg, #00ff88, #00cc70);
+      color: #000000;
+      border-color: #00ff88;
+    }
+
+    .btn-register:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+      border-color: #ffd700;
+    }
+
+    .divider {
+      text-align: center;
+      color: #64748b;
+      margin: 1.5rem 0;
+      font-weight: 600;
+    }
+
+    .logout-btn {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logout-link {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .logout-link:hover {
+      color: #ffd700;
+    }
+
+    @media (max-width: 768px) {
+      .welcome-text { font-size: 2rem; }
+      .subtitle-text { font-size: 1rem; }
+      .options-card { padding: 1.5rem; }
+      .option-btn { padding: 1.2rem; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Logo and Welcome Section -->
+    <div class="logo-section">
+      <img src="/static/skit-logo.jpg" alt="SKIT College Logo" class="college-logo" />
+      <h1 class="welcome-text">Welcome!</h1>
+      <p class="subtitle-text">What would you like to do?</p>
+    </div>
+
+    <!-- Options Card -->
+    <div class="options-card">
+      <div class="card-header-custom">
+        <i class="fas fa-compass me-2"></i>Choose Your Action
+      </div>
+
+      <button class="option-btn btn-watch" onclick="window.location.href='/live'">
+        <i class="fas fa-eye"></i>
+        Watch the Auction
+      </button>
+
+      <div class="divider">— or —</div>
+
+      <button class="option-btn btn-register" onclick="showPlayerRegistration()">
+        <i class="fas fa-user-plus"></i>
+        Register as a Player
+      </button>
+
+      <div class="logout-btn">
+        <a href="/" class="logout-link" onclick="localStorage.clear()">
+          <i class="fas fa-sign-out-alt me-1"></i>Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Player Registration Form (Hidden by default) -->
+    <div class="options-card mt-4" id="player-registration-form" style="display: none;">
+      <div class="card-header-custom">
+        <i class="fas fa-user-plus me-2"></i>Register as a Player
+      </div>
+
+      <form id="player-form" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Full Name</label>
+          <input name="full_name" type="text" class="form-control" placeholder="Enter your full name" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Category (Affiliation)</label>
+          <select name="category" class="form-select" required>
+            <option value="">Select Category</option>
+            <option>Faculty</option>
+            <option>Student</option>
+            <option>Alumni</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Role (Playing Position)</label>
+          <select name="role" class="form-select" required>
+            <option value="">Select Role</option>
+            <option>Batsman</option>
+            <option>Bowler</option>
+            <option>All-Rounder</option>
+            <option>Wicketkeeper</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Age</label>
+          <input name="age" type="number" min="10" max="60" class="form-control" placeholder="Age" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Batting Style</label>
+          <input name="batting_style" type="text" class="form-control" placeholder="e.g., Right-hand" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Bowling Style</label>
+          <input name="bowling_style" type="text" class="form-control" placeholder="e.g., Fast" />
+        </div>
+        
+        <div class="col-12">
+          <label class="form-label">Profile Photo</label>
+          <input name="photo" type="file" class="form-control" id="player-photo-input" accept="image/*" />
+          <small class="text-muted">Upload your photo (JPG, PNG, max 5MB)</small>
+        </div>
+        
+        <div class="col-12" id="photo-preview-container" style="display:none;">
+          <div class="text-center">
+            <img id="photo-preview" src="" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px; border-radius: 10px; border: 2px solid var(--primary-gold);">
+            <div class="mt-2">
+              <button type="button" class="btn btn-sm btn-danger" id="remove-photo-btn">
+                <i class="fas fa-times me-1"></i>Remove Photo
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-12">
+          <label class="form-label">Short Bio</label>
+          <textarea name="bio" class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+        </div>
+        
+        <div class="col-12 d-flex justify-content-between gap-2">
+          <button type="button" class="btn btn-secondary" onclick="hidePlayerRegistration()">
+            <i class="fas fa-arrow-left me-2"></i>Back
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane me-2"></i>Submit Registration
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/cinematic-effects.js"></script>
+  
+  <script>
+    // Show player registration form
+    function showPlayerRegistration() {
+      document.querySelector('.options-card').style.display = 'none';
+      document.getElementById('player-registration-form').style.display = 'block';
+      document.getElementById('player-registration-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Hide player registration form
+    function hidePlayerRegistration() {
+      document.getElementById('player-registration-form').style.display = 'none';
+      document.querySelector('.options-card').style.display = 'block';
+      document.querySelector('.options-card').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Player Registration Form Handler
+    document.getElementById('player-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      
+      try {
+        const response = await fetch('/players/public_register', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.ok) {
+          alert(data.message || 'Registration successful! Your profile is pending admin approval.');
+          e.target.reset();
+          document.getElementById('photo-preview-container').style.display = 'none';
+          hidePlayerRegistration();
+        } else {
+          alert(data.detail || 'Registration failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('An error occurred during registration. Please try again.');
+      }
+    });
+
+    // Photo preview functionality
+    document.getElementById('player-photo-input').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('photo-preview').src = e.target.result;
+          document.getElementById('photo-preview-container').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Remove photo
+    document.getElementById('remove-photo-btn').addEventListener('click', function() {
+      document.getElementById('player-photo-input').value = '';
+      document.getElementById('photo-preview-container').style.display = 'none';
+    });
+  </script>

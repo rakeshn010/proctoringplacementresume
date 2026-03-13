@@ -1,0 +1,347 @@
+/* Unified Player Card Styles - Used across Live, Team Dashboard, and Admin */
+
+.player-card {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 30, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 1.2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.player-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    border-color: #ffd700;
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+}
+
+.player-card:hover::before {
+    opacity: 1;
+}
+
+.player-card-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    border: 3px solid #ffd700;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.player-card-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.player-card-info {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.3rem;
+}
+
+.player-card-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffd700;
+    margin: 0.8rem 0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: 0.8rem;
+    text-transform: uppercase;
+}
+
+.status-sold { 
+    background: #00ff88; 
+    color: #000; 
+}
+
+.status-unsold { 
+    background: #ff4757; 
+    color: white; 
+}
+
+.status-available { 
+    background: #00d4ff; 
+    color: #000; 
+}
+
+/* Grid layout for player cards */
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.players-grid-admin {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Admin-specific card additions */
+.player-card-admin {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 30, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-card-admin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.player-card-admin:hover {
+    transform: translateY(-3px);
+    border-color: #ffd700;
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+}
+
+.player-card-admin:hover::before {
+    opacity: 1;
+}
+
+.player-card-admin-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 0.8rem;
+    border: 3px solid #ffd700;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.player-card-admin-body {
+    position: relative;
+    z-index: 1;
+}
+
+.player-card-admin-name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: #ffffff;
+}
+
+.player-card-admin-info {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.4rem;
+}
+
+.player-card-admin-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffd700;
+    margin: 0.6rem 0;
+}
+
+.player-card-admin-actions {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+}
+
+.player-card-admin-actions .flex-1 {
+    flex: 1;
+}
+
+.player-card-admin-actions input,
+.player-card-admin-actions select {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+}
+
+.player-card-admin-actions button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.status-badge-admin {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .players-grid,
+    .players-grid-admin {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    .player-card-img,
+    .player-card-admin-img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .player-card-name,
+    .player-card-admin-name {
+        font-size: 1rem;
+    }
+}
+
+
+/* Enhanced Player Cards - Added 2026-03-13 */
+.player-card-enhanced {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.player-card-enhanced:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.player-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.player-card-enhanced:hover::before {
+    left: 100%;
+}
+
+.player-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.player-image-container img {
+    transition: transform 0.3s ease;
+}
+
+.player-image-container:hover img {
+    transform: scale(1.1);
+}
+
+.player-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.player-badge.sold {
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+}
+
+.player-badge.live {
+    background: rgba(255, 152, 0, 0.9);
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.player-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.stat-item {
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 4px;
+}
+
+/* Loading skeleton */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, .clickable {
+    transition: all 0.2s ease;
+}
+
+button:active, a:active, .clickable:active {
+    transform: scale(0.95);
+}

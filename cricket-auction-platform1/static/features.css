@@ -1,0 +1,590 @@
+/* ============================================================
+   CHAT, WISHLIST, AND COMPARISON FEATURES
+   Version: 1.0.0
+============================================================ */
+
+/* ========== CHAT SYSTEM ========== */
+
+.chat-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    bottom: 0;
+    width: 400px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-panel.open {
+    right: 0;
+}
+
+.chat-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid #ffd700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    color: #ffd700;
+}
+
+.chat-close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.chat-rooms-list {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-room-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chat-room-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.chat-room-item.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.chat-room-name {
+    font-weight: 600;
+    color: #fff;
+}
+
+.chat-room-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chat-messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.chat-message {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.chat-message.admin {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 3px solid #ffd700;
+}
+
+.chat-message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.chat-sender {
+    font-weight: 600;
+    color: #ffd700;
+}
+
+.chat-time {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.chat-message-text {
+    color: #fff;
+    word-wrap: break-word;
+}
+
+.chat-empty {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 40px 20px;
+}
+
+.chat-input-container {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    resize: none;
+}
+
+#chat-send-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#chat-send-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ========== WISHLIST SYSTEM ========== */
+
+.wishlist-panel {
+    position: fixed;
+    right: -450px;
+    top: 0;
+    bottom: 0;
+    width: 450px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.wishlist-panel.open {
+    right: 0;
+}
+
+.wishlist-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid #ffd700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.wishlist-container {
+    padding: 20px;
+}
+
+.wishlist-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.wishlist-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.wishlist-item.live {
+    border-color: #ff4444;
+    animation: pulse 2s infinite;
+}
+
+.wishlist-live-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4444;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.wishlist-player-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.wishlist-item-body {
+    color: #fff;
+}
+
+.wishlist-player-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.wishlist-player-meta {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.wishlist-player-meta .badge.bg-high {
+    background: #ff4444 !important;
+}
+
+.wishlist-player-meta .badge.bg-medium {
+    background: #ffaa00 !important;
+}
+
+.wishlist-player-meta .badge.bg-low {
+    background: #888 !important;
+}
+
+.wishlist-player-price {
+    font-size: 16px;
+    color: #ffd700;
+    margin-bottom: 5px;
+}
+
+.wishlist-max-bid {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+}
+
+.wishlist-item-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.wishlist-priority-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.wishlist-priority-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 90%;
+}
+
+.priority-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.priority-btn {
+    padding: 15px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.priority-btn:hover {
+    transform: scale(1.05);
+}
+
+.priority-btn.high {
+    border-color: #ff4444;
+}
+
+.priority-btn.medium {
+    border-color: #ffaa00;
+}
+
+.priority-btn.low {
+    border-color: #888;
+}
+
+/* ========== COMPARISON SYSTEM ========== */
+
+.comparison-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.comparison-modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    color: #fff;
+}
+
+#team-select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#team-select option {
+    background: #1a1a2e;
+    padding: 10px;
+}
+
+.comparison-results-container {
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    right: 50px;
+    bottom: 50px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 30px;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.comparison-team-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.comparison-team-card h5 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.comparison-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.comparison-highlight {
+    background: rgba(255, 215, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.comparison-roles {
+    margin-top: 15px;
+    color: #fff;
+}
+
+.role-badge {
+    display: inline-block;
+    background: rgba(102, 126, 234, 0.3);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px 5px 0 0;
+    font-size: 12px;
+}
+
+.analysis-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.analysis-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.analysis-stat {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.analysis-strengths,
+.analysis-weaknesses,
+.analysis-recommendations {
+    margin: 20px 0;
+}
+
+.analysis-strengths ul,
+.analysis-weaknesses ul,
+.analysis-recommendations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.analysis-strengths li,
+.analysis-weaknesses li,
+.analysis-recommendations li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.analysis-strengths li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+}
+
+.analysis-weaknesses li:before {
+    content: "⚠";
+    position: absolute;
+    left: 0;
+    color: #f59e0b;
+}
+
+.analysis-recommendations li:before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+}
+
+/* ========== FLOATING ACTION BUTTONS ========== */
+
+.floating-actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 998;
+}
+
+.floating-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+}
+
+.floating-btn .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4444;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== ANIMATIONS ========== */
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
+    }
+}
+
+/* ========== MOBILE RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+    .chat-panel,
+    .wishlist-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .comparison-results-container {
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+    
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .floating-actions {
+        bottom: 80px;
+    }
+}

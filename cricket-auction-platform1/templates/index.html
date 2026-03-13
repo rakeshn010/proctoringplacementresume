@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SKIT Premier League - Cricket Auction Platform</title>
+  <link rel="icon" type="image/jpeg" href="/static/skit-logo.jpg" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/static/skit-pro.css" />
+  
+  <style>
+    body {
+      background: #000000 !important;
+      overflow-x: hidden;
+    }
+
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)),
+                  url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1920&q=80') center/cover;
+      background-attachment: fixed;
+      padding: 40px 20px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 1200px;
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .college-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid #ffd700;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+      margin-bottom: 2rem;
+      object-fit: cover;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      letter-spacing: 1px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: #ffd700;
+      margin-bottom: 3rem;
+      font-weight: 600;
+    }
+
+    .login-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .login-card {
+      background: rgba(17, 17, 17, 0.8);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #ffd700, #ffa500);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-8px);
+      border-color: #ffd700;
+      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .login-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .login-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-icon {
+      font-size: 3.5rem;
+      color: #ffd700;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    .card-description {
+      color: #cbd5e1;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .card-btn {
+      background: linear-gradient(135deg, #ffd700, #ffa500);
+      color: #000000;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-top: 4rem;
+    }
+
+    .footer-highlight {
+      color: #ffd700;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 1.2rem; }
+      .login-cards { grid-template-columns: 1fr; gap: 1.5rem; }
+      .login-card { padding: 2rem 1.5rem; }
+      .college-logo { width: 100px; height: 100px; }
+    }
+    
+    /* Rules Button */
+    .rules-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ffd700, #ffa500);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .rules-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+    }
+    
+    .rules-btn i {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <!-- Rules Button (Top Right) -->
+    <button class="rules-btn" onclick="openRulesModal()">
+      <i class="fas fa-book"></i> Rules
+    </button>
+    
+    <div class="hero-content">
+      <!-- College Logo -->
+      <img src="/static/skit-logo.jpg" alt="SKIT College Logo" class="college-logo" />
+
+      <h1 class="hero-title">Welcome to SKIT Premier League</h1>
+      <p class="hero-subtitle">Official Cricket Auction Platform</p>
+      
+      <!-- Login Cards -->
+      <div class="login-cards">
+        <!-- Admin Login Card -->
+        <div class="login-card" id="admin-login-card">
+          <div class="login-card-content">
+            <div class="card-icon">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <h3 class="card-title">Admin Login</h3>
+            <p class="card-description">
+              Access the control panel to manage auctions, players, and teams
+            </p>
+            <button class="card-btn" type="button">Enter as Admin</button>
+          </div>
+        </div>
+
+        <!-- Team Login Card -->
+        <div class="login-card" id="team-login-card">
+          <div class="login-card-content">
+            <div class="card-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="card-title">Team Login</h3>
+            <p class="card-description">
+              Join the auction and bid for your favorite players
+            </p>
+            <button class="card-btn" type="button">Enter as Team</button>
+          </div>
+        </div>
+
+        <!-- User Login Card -->
+        <div class="login-card" id="user-login-card">
+          <div class="login-card-content">
+            <div class="card-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3 class="card-title">User Login</h3>
+            <p class="card-description">
+              Watch live auctions and register as a player
+            </p>
+            <button class="card-btn" type="button">Enter as User</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>© 2026 <span class="footer-highlight">SKIT Premier League</span> | All Rights Reserved</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Login Modal -->
+  <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="adminModalLabel">
+            <i class="fas fa-user-shield me-2"></i>Admin Login
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning mb-3">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Admin login is for authorized organizers only.
+          </div>
+          <form id="admin-login-form">
+            <div class="mb-3">
+              <label class="form-label">Admin Email</label>
+              <input name="email" type="email" class="form-control" placeholder="admin@cricket.com" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" placeholder="Enter your password" required minlength="8" />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt me-2"></i>Login as Admin
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Login Modal -->
+  <div class="modal fade" id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="teamModalLabel">
+            <i class="fas fa-users me-2"></i>Team Login
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info mb-3">
+            <i class="fas fa-info-circle me-2"></i>
+            Team login is for registered teams to participate in bidding.
+          </div>
+          <form id="team-login-form">
+            <div class="mb-3">
+              <label class="form-label">Team Username</label>
+              <input name="username" type="text" class="form-control" placeholder="Enter team username" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" placeholder="Enter your password" required />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt me-2"></i>Login as Team
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Login Modal -->
+  <div class="modal fade" id="userLoginModal" tabindex="-1" aria-labelledby="userLoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userLoginModalLabel">
+            <i class="fas fa-user me-2"></i>User Login
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="user-login-form">
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input name="email" type="email" class="form-control" placeholder="your@email.com" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" placeholder="Enter your password" required minlength="8" />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+              </button>
+            </div>
+          </form>
+          <div class="text-center mt-3">
+            <small style="color: #94a3b8;">
+              Don't have an account? 
+              <a href="#" class="text-decoration-none" style="color: #facc15;" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal">
+                Register here
+              </a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">
+            <i class="fas fa-user-plus me-2"></i>Create Account
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input name="email" type="email" class="form-control" placeholder="your@email.com" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Name (optional)</label>
+              <input name="name" type="text" class="form-control" placeholder="Your full name" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" placeholder="Create a password" required minlength="8" />
+              <small class="text-muted">
+                Must be at least 8 characters with uppercase, lowercase, and numbers
+              </small>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-user-plus me-2"></i>Create Account
+              </button>
+            </div>
+          </form>
+          <div class="text-center mt-3">
+            <small style="color: #94a3b8;">
+              Already have an account? 
+              <a href="#" class="text-decoration-none" style="color: #facc15;" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#userLoginModal">
+                Login here
+              </a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rules Modal -->
+  <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background: linear-gradient(135deg, #ffd700, #ffa500); color: #000;">
+          <h5 class="modal-title" id="rulesModalLabel">
+            <i class="fas fa-book me-2"></i>SKIT Premier League - Auction Rules
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+          
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-info-circle me-2"></i>How the Auction Works
+            </h6>
+            <p style="color: #cbd5e1; line-height: 1.8;">
+              SKIT Premier League is a live cricket auction platform where teams bid for players in real-time. 
+              The auction is managed by admins and teams compete to build the best squad within their budget.
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-user-plus me-2"></i>1. Player Registration
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li>Users can register on the platform and create their profile</li>
+              <li>After registration, users can submit their player profile with details like name, role, category, and base price</li>
+              <li>Players can upload their photo and provide cricket statistics</li>
+              <li>Admin reviews and approves player registrations before they enter the auction pool</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-users me-2"></i>2. Team Registration
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li>Teams are created by the admin with a username and password</li>
+              <li>Each team receives a budget (purse) to spend on players</li>
+              <li>Teams must maintain minimum squad requirements (e.g., minimum players per category)</li>
+              <li>Teams login using their credentials to participate in bidding</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-gavel me-2"></i>3. Live Auction Process
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li><strong>Admin Control:</strong> Admin starts the auction and brings players one by one</li>
+              <li><strong>Player Display:</strong> Current player's details are shown to all teams in real-time</li>
+              <li><strong>Bidding:</strong> Teams place bids higher than the current bid amount</li>
+              <li><strong>Timer:</strong> Each player has a countdown timer (e.g., 30 seconds)</li>
+              <li><strong>Winning:</strong> When timer expires, the highest bidder wins the player</li>
+              <li><strong>Budget Update:</strong> Winning team's purse is reduced by the bid amount</li>
+              <li><strong>Next Player:</strong> Admin moves to the next player and the process repeats</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-layer-group me-2"></i>4. Player Categories
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li><strong>Platinum:</strong> Premium players with highest base price</li>
+              <li><strong>Gold:</strong> High-value players</li>
+              <li><strong>Silver:</strong> Mid-tier players</li>
+              <li><strong>Bronze:</strong> Entry-level players</li>
+              <li>Each category has different base prices set by admin</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-user-shield me-2"></i>5. Admin Controls
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li>Start/pause/resume auction</li>
+              <li>Approve or reject player registrations</li>
+              <li>Create and manage teams</li>
+              <li>Set auction timer and base prices</li>
+              <li>Monitor live bidding and resolve disputes</li>
+              <li>View analytics and auction statistics</li>
+              <li>Manage player categories and roles</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-chart-line me-2"></i>6. Team Dashboard Features
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li><strong>Live Bidding:</strong> Place bids on current player</li>
+              <li><strong>My Squad:</strong> View purchased players and remaining budget</li>
+              <li><strong>Wishlist:</strong> Mark favorite players before auction</li>
+              <li><strong>Comparison:</strong> Compare your team with other teams</li>
+              <li><strong>Live Chat:</strong> Communicate with other teams during auction</li>
+              <li><strong>Real-time Updates:</strong> Instant notifications via WebSocket</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h6 style="color: #ffd700; font-weight: 700;">
+              <i class="fas fa-trophy me-2"></i>7. Winning Strategy
+            </h6>
+            <ul style="color: #cbd5e1; line-height: 1.8;">
+              <li>Plan your budget wisely across all categories</li>
+              <li>Use wishlist to track target players</li>
+              <li>Monitor other teams' spending and remaining purse</li>
+              <li>Balance between star players and squad depth</li>
+              <li>Act quickly when timer is running out</li>
+              <li>Save budget for key players in your preferred categories</li>
+            </ul>
+          </div>
+
+          <div class="alert alert-warning" style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; color: #ffd700;">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Important:</strong> All bids are final. Once you win a player, the amount is deducted from your purse and cannot be reversed.
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/cinematic-effects.js"></script>
+  
+  <script>
+    // Function to open Rules modal (global scope for onclick)
+    function openRulesModal() {
+      const modal = new bootstrap.Modal(document.getElementById('rulesModal'));
+      modal.show();
+    }
+
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // Function to open modal
+      function openModal(modalId) {
+        const modal = new bootstrap.Modal(document.getElementById(modalId));
+        modal.show();
+      }
+
+      // Add click event listeners to login cards
+      document.getElementById('admin-login-card').addEventListener('click', function() {
+        openModal('adminModal');
+      });
+
+      document.getElementById('team-login-card').addEventListener('click', function() {
+        openModal('teamModal');
+      });
+
+      document.getElementById('user-login-card').addEventListener('click', function() {
+        openModal('userLoginModal');
+      });
+
+      // User Login Form Handler
+      document.getElementById('user-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        try {
+          const response = await fetch('/auth/login', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && data.access_token) {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
+            
+            // Close modal first
+            const modalElement = document.getElementById('userLoginModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+              modal.hide();
+            }
+            
+            // Wait for modal to close, then redirect
+            setTimeout(() => {
+              window.location.href = '/user/dashboard';
+            }, 300);
+          } else {
+            alert(data.detail || 'Login failed. Please check your credentials.');
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('An error occurred during login. Please try again.');
+        }
+      });
+
+      // Register Form Handler
+      document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        try {
+          const response = await fetch('/auth/register', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && data.ok) {
+            alert(data.message || 'Registration successful! Please login.');
+            
+            // Close register modal
+            const registerModalElement = document.getElementById('registerModal');
+            const registerModal = bootstrap.Modal.getInstance(registerModalElement);
+            if (registerModal) {
+              registerModal.hide();
+            }
+            
+            // Open login modal after a short delay
+            setTimeout(() => {
+              openModal('userLoginModal');
+            }, 500);
+            
+            e.target.reset();
+          } else {
+            // Handle error message properly
+            let errorMessage = 'Registration failed. Please try again.';
+            if (typeof data.detail === 'string') {
+              errorMessage = data.detail;
+            } else if (data.message) {
+              errorMessage = data.message;
+            } else if (data.detail && typeof data.detail === 'object') {
+              errorMessage = JSON.stringify(data.detail);
+            }
+            alert(errorMessage);
+          }
+        } catch (error) {
+          console.error('Registration error:', error);
+          alert('An error occurred during registration. Please try again.');
+        }
+      });
+
+      // Admin Login Form Handler
+      document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        try {
+          const response = await fetch('/auth/login', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && data.access_token) {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
+            
+            // Close modal first
+            const modalElement = document.getElementById('adminModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+              modal.hide();
+            }
+            
+            // Wait for modal to close, then redirect
+            setTimeout(() => {
+              window.location.href = '/admin';
+            }, 300);
+          } else {
+            alert(data.detail || 'Login failed. Please check your credentials.');
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('An error occurred during login. Please try again.');
+        }
+      });
+
+      // Team Login Form Handler
+      document.getElementById('team-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        console.log('Team login attempt with username:', formData.get('username'));
+        
+        try {
+          const response = await fetch('/auth/team/login', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await response.json();
+          console.log('Team login response:', data);
+          
+          if (response.ok && data.access_token) {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
+            localStorage.setItem('team_id', data.team_id);
+            console.log('Tokens saved, redirecting to team dashboard...');
+            
+            // Close modal first
+            const modalElement = document.getElementById('teamModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+              modal.hide();
+            }
+            
+            // Wait for modal to close, then redirect
+            setTimeout(() => {
+              window.location.href = '/team/dashboard';
+            }, 300);
+          } else {
+            console.error('Team login failed:', data);
+            alert(data.detail || 'Login failed. Please check your credentials.');
+          }
+        } catch (error) {
+          console.error('Team login error:', error);
+          alert('An error occurred during login. Please try again.');
+        }
+      });
+
+    }); // End of DOMContentLoaded
+  </script>
+
+</body>
+</html>
